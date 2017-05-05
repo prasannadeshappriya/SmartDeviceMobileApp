@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prasanna.smartdevicemobileapp.Request.PostRequest;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +54,8 @@ public class HomeActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.i("TAG", "Error while setting parameters for post request");
             }
-            PostRequest request = new PostRequest(getApplicationContext(), param, pd, this, "DISCONNECT","disconnect");
+            PostRequest request = new PostRequest(getApplicationContext(), param, pd, this,
+                    Constants.METHOD_DISCONNECT,Constants.DISCONNECT_URL);
             request.execute();
         }else{
             Toast.makeText(this,"This device is not connected!",Toast.LENGTH_LONG).show();
@@ -69,7 +69,8 @@ public class HomeActivity extends AppCompatActivity {
         }catch (Exception e){
             Log.i("TAG", "Error while setting parameters for post request");
         }
-        PostRequest request = new PostRequest(getApplicationContext(),param,pd, this,"CONNECT","connect");
+        PostRequest request = new PostRequest(getApplicationContext(),param,pd, this,
+                Constants.METHOD_CONNECT,Constants.CONNECT_URL);
         request.execute();
     }
 

@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.prasanna.smartdevicemobileapp.Constants;
 import com.example.prasanna.smartdevicemobileapp.HomeActivity;
 
 import org.json.JSONException;
@@ -39,7 +40,7 @@ public class PostRequest extends AsyncTask <Void,Void,Void> {
         this.patameters = params;
         this.activity = activity;
         this.method = method;
-        this.url = "http://10.0.2.2:8000/" + url;
+        this.url = url;
     }
     @Override
     protected void onPreExecute() {
@@ -96,7 +97,7 @@ public class PostRequest extends AsyncTask <Void,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         Log.i("TAG","Response :- " + serverResponse);
         try {
-            if(method.equals("CONNECT")) {
+            if(method.equals(Constants.METHOD_CONNECT)) {
                 JSONObject obj = new JSONObject(serverResponse);
                 if (obj.has("serial")) {
                     activity.setTextDisplay("Connected!");
@@ -105,7 +106,7 @@ public class PostRequest extends AsyncTask <Void,Void,Void> {
                     activity.setTextDisplay("Not Connected!");
                     Log.i("TAG", "Connection error, Please try again");
                 }
-            }else if(method.equals("DISCONNECT")){
+            }else if(method.equals(Constants.METHOD_DISCONNECT)){
                 JSONObject obj = new JSONObject(serverResponse);
                 if (obj.has("response")) {
                     activity.setTextDisplay("Not Connected!");
