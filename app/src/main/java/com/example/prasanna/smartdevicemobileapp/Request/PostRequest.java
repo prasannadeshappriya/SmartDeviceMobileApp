@@ -28,12 +28,18 @@ public class PostRequest extends AsyncTask <Void,Void,Void> {
     private String serverResponse;
     private Context context;
     private Map<String, String> patameters;
-    ProgressDialog pd;
+    private String method;
+    private ProgressDialog pd;
+    private HomeActivity activity;
+    private String url;
 
-    public PostRequest(Context context, Map<String,String> params, ProgressDialog pd, HomeActivity activity){
+    public PostRequest(Context context, Map<String,String> params, ProgressDialog pd, HomeActivity activity,String method, String url){
         this.context = context;
         this.pd = pd;
         this.patameters = params;
+        this.activity = activity;
+        this.method = method;
+        this.url = "http://10.0.2.2:8000/" + url;
     }
     @Override
     protected void onPreExecute() {
@@ -41,7 +47,7 @@ public class PostRequest extends AsyncTask <Void,Void,Void> {
         pd.setCanceledOnTouchOutside(false);
         pd.setMessage("Processing..");
         pd.show();
-        SERVER_URL = "http://10.0.2.2:8000/connect";
+        SERVER_URL = url;
     }
 
     @Override
@@ -90,8 +96,25 @@ public class PostRequest extends AsyncTask <Void,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         Log.i("TAG","Response :- " + serverResponse);
         try {
-            JSONObject obj = new JSONObject(serverResponse);
-            Log.i("TAG","Response Fuck :- " + obj.toString());
+            if(method.equals("CONNECT")) {
+                JSONObject obj = new JSONObject(serverResponse);
+                if (obj.has("serial")) {
+                    activity.setTextDisplay("Connected!");
+                    Log.i("TAG", "Serial for the session :- " + obj.getString("serial"));
+                } else {
+                    activity.setTextDisplay("Not Connected!");
+                    Log.i("TAG", "Connection error, Please try again");
+                }
+            }else if(method.equals("DISCONNECT")){
+                JSONObject obj = new JSONObject(serverResponse);
+                if (obj.has("response")) {
+                    activity.setTextDisplay("Not Connected!");
+                    Log.i("TAG", "Response :- " + obj.getString("response"));
+                } else {
+                    activity.setTextDisplay("Connected!");
+                    Log.i("TAG", "Connection error, Please try again");
+                }
+            }
         } catch (JSONException e) {
             Log.i("TAG","Invalid response from server :- " + e.toString());
         }

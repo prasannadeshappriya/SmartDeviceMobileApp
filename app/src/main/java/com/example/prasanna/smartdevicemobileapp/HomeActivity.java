@@ -1,25 +1,15 @@
 package com.example.prasanna.smartdevicemobileapp;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.prasanna.smartdevicemobileapp.Request.PostRequest;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +17,7 @@ import java.util.Map;
 public class HomeActivity extends AppCompatActivity {
     private ProgressDialog pd;
     private Button btnConnect;
+    private Button btnDisconnect;
     private TextView tvDisplay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +26,16 @@ public class HomeActivity extends AppCompatActivity {
         pd = new ProgressDialog(this);
         tvDisplay = (TextView)findViewById(R.id.tvDisplay);
         btnConnect = (Button) findViewById(R.id.btnConnect);
+        btnDisconnect = (Button) findViewById(R.id.btnDisconnect);
+
+        btnDisconnect.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sendDisconnectionRequest();
+                    }
+                }
+        );
 
         btnConnect.setOnClickListener(
                 new View.OnClickListener() {
@@ -46,6 +47,21 @@ public class HomeActivity extends AppCompatActivity {
         );
     }
 
+    private void sendDisconnectionRequest() {
+        if(tvDisplay.getText().toString().equals("Connected!")) {
+            Map<String, String> param = new HashMap<>();
+            try {
+                param.put("status", "disconnection request");
+            } catch (Exception e) {
+                Log.i("TAG", "Error while setting parameters for post request");
+            }
+            PostRequest request = new PostRequest(getApplicationContext(), param, pd, this, "DISCONNECT","disconnect");
+            request.execute();
+        }else{
+            Toast.makeText(this,"This device is not connected!",Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void sendConnectionRequest() {
         Map<String, String> param = new HashMap<>();
         try {
@@ -53,7 +69,11 @@ public class HomeActivity extends AppCompatActivity {
         }catch (Exception e){
             Log.i("TAG", "Error while setting parameters for post request");
         }
-        PostRequest request = new PostRequest(getApplicationContext(),param,pd, this);
+        PostRequest request = new PostRequest(getApplicationContext(),param,pd, this,"CONNECT","connect");
         request.execute();
+    }
+
+    public void setTextDisplay(String message){
+        tvDisplay.setText(message);
     }
 }
