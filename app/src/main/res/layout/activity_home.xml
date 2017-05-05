@@ -13,5 +13,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_centerHorizontal="true"
+        android:text="Not Connected!"
+        android:id="@+id/tvDisplay"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dip"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btnConnect"
+        android:text="Connect"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btnConnect"
+        android:id="@+id/btnStart"
+        android:text="Start"/>
 </RelativeLayout>
