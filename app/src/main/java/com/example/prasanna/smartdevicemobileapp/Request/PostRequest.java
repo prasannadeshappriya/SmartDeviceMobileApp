@@ -101,6 +101,7 @@ public class PostRequest extends AsyncTask <Void,Void,Void> {
                 JSONObject obj = new JSONObject(serverResponse);
                 if (obj.has("serial")) {
                     activity.setTextDisplay("Connected!");
+                    activity.setSerial(obj.getString("serial"));
                     Log.i("TAG", "Serial for the session :- " + obj.getString("serial"));
                 } else {
                     activity.setTextDisplay("Not Connected!");

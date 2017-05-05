@@ -7,6 +7,8 @@ package com.example.prasanna.smartdevicemobileapp;
 public abstract class Constants {
     public static final String CONNECT_URL = "http://10.0.2.2:8000/connect";
     public static final String DISCONNECT_URL = "http://10.0.2.2:8000/disconnect";
+    public static final String PROCESS_URL = "http://10.0.2.2:8000/read_data";
+
 
     public static final String METHOD_CONNECT = "CONNECT";
     public static final String METHOD_DISCONNECT = "DISCONNECT";

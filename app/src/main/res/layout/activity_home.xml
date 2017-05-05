@@ -16,6 +16,16 @@
         android:layout_centerHorizontal="true"
         android:text="Not Connected!"
         android:id="@+id/tvDisplay"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDisplay"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dip"
+        android:text="No Output Available !"
+        android:id="@+id/tvDisplayOutput"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,4 +47,6 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/btnDisconnect"
         android:text="Disconnect"/>
+
+
 </RelativeLayout>
