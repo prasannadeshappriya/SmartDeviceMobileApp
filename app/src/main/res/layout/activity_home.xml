@@ -22,31 +22,50 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDisplay"
         android:layout_centerHorizontal="true"
+        android:textSize="40dip"
         android:layout_marginTop="10dip"
+        android:gravity="center_horizontal"
         android:text="No Output Available !"
         android:id="@+id/tvDisplayOutput"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dip"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dip"
         android:layout_centerHorizontal="true"
         android:id="@+id/btnConnect"
         android:text="Connect"/>
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dip"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/btnConnect"
         android:id="@+id/btnStart"
         android:text="Start"/>
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dip"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnStart"
         android:layout_centerHorizontal="true"
         android:id="@+id/btnDisconnect"
         android:text="Disconnect"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnDisconnect"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dip"
+        android:id="@+id/etTitle"
+        android:text="Server IP :- "/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:id="@+id/etIP"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etTitle"
+        android:gravity="center_horizontal"
+        android:text="192.168.43.101"/>
 
 
 </RelativeLayout>

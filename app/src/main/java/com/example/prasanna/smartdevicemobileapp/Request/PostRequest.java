@@ -111,6 +111,7 @@ public class PostRequest extends AsyncTask <Void,Void,Void> {
                 JSONObject obj = new JSONObject(serverResponse);
                 if (obj.has("response")) {
                     activity.setTextDisplay("Not Connected!");
+                    activity.setTextOutputDisplay("No Output Available !");
                     Log.i("TAG", "Response :- " + obj.getString("response"));
                 } else {
                     activity.setTextDisplay("Connected!");

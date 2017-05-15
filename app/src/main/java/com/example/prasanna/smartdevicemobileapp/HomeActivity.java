@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button btnConnect;
     private Button btnDisconnect;
     private Button btnStart;
+    private EditText IP;
     private TextView tvDisplay;
     private TextView tvDisplayOutput;
     private Boolean con;
@@ -74,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
             if(tvDisplay.getText().toString().equals("Connected!")) {
                 setStartButtonText(1);
                 con = true;
-                processInput process = new processInput(this);
+                processInput process = new processInput(this,IP.getText().toString());
                 process.execute();
             }else{
                 Toast.makeText(this,"This device is not connected!",Toast.LENGTH_LONG).show();
@@ -90,16 +92,19 @@ public class HomeActivity extends AppCompatActivity {
         private String serverResponse;
         private Context context;
         private String data;
-        public processInput(Context context){
-            this.context = context;
+        private String ip_value;
+        public processInput(Context context, String ip_value){
+            this.context = context; this.ip_value = ip_value;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             if(con==true){
                 setTextOutputDisplay(data);
-                processInput process = new processInput(context);
+                processInput process = new processInput(context,ip_value);
                 process.execute();
+            }else{
+                setTextOutputDisplay("No Output Available !");
             }
         }
 
@@ -109,7 +114,8 @@ public class HomeActivity extends AppCompatActivity {
 
             //-------------------------------------------------------------
             try {
-                StringRequest request = new StringRequest(Request.Method.POST, Constants.PROCESS_URL,
+                Log.i("TAG","http://" + ip_value + Constants.PROCESS_URL);
+                StringRequest request = new StringRequest(Request.Method.POST, "http://" + ip_value + Constants.PROCESS_URL,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -185,6 +191,7 @@ public class HomeActivity extends AppCompatActivity {
         btnDisconnect = (Button) findViewById(R.id.btnDisconnect);
         btnStart = (Button) findViewById(R.id.btnStart);
         tvDisplayOutput = (TextView) findViewById(R.id.tvDisplayOutput);
+        IP = (EditText) findViewById(R.id.etIP);
     }
 
     private void sendDisconnectionRequest() {
@@ -197,7 +204,7 @@ public class HomeActivity extends AppCompatActivity {
                 Log.i("TAG", "Error while setting parameters for post request");
             }
             PostRequest request = new PostRequest(getApplicationContext(), param, pd, this,
-                    Constants.METHOD_DISCONNECT,Constants.DISCONNECT_URL);
+                    Constants.METHOD_DISCONNECT,"http://" + IP.getText().toString() + Constants.DISCONNECT_URL);
             request.execute();
         }else{
             Toast.makeText(this,"This device is not connected!",Toast.LENGTH_LONG).show();
@@ -215,7 +222,7 @@ public class HomeActivity extends AppCompatActivity {
                 Log.i("TAG", "Error while setting parameters for post request");
             }
             PostRequest request = new PostRequest(getApplicationContext(), param, pd, this,
-                    Constants.METHOD_CONNECT, Constants.CONNECT_URL);
+                    Constants.METHOD_CONNECT, "http://" + IP.getText().toString() + Constants.CONNECT_URL);
             request.execute();
         }
     }
